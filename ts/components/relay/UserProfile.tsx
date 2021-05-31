@@ -10,7 +10,7 @@ import {vscDarkPlus} from 'react-syntax-highlighter/dist/esm/styles/prism';
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 SyntaxHighlighter.registerLanguage('js', js);
 interface QueryResponse {
-  demoUser?: Record<string, string | boolean | number>;
+  Device?: Record<string, string | boolean | number>;
 }
 
 const UserProfile = (): JSX.Element => {
@@ -37,41 +37,47 @@ const UserProfile = (): JSX.Element => {
   });
 
   const mutationGQL = graphql`
-    mutation UserProfile_AddUserMutation($input: AddUserInput!) {
-      addUser(input: $input) {
-        userId
-        username
-        password
-        email
-        gender
-        pizzaTopping
-        age
+    mutation UserProfile_AddUserMutation($input: AddDeviceInput!) {
+      addDevice(input: $input) {
+        deviceId
+        deviceName
+        description
+        cost
+        oem
+        badges
+        functions
       }
     }
   `;
 
   const specifications: PeriqlesSpecifications = {
-    header: 'Sign Up',
+    header: 'Add Device',
     fields: {
-      gender: {
-        element: 'radio',
-        label: 'Gender',
+      oem: {
+        element: 'select',
+        label: 'OEM',
         options: [
-          {label: 'Non-binary', value: 'NON_BINARY'},
-          {label: 'Male', value: 'MALE'},
-          {label: 'Female', value: 'FEMALE'},
+          {label: 'Geek+', value: 'GeekPlus'},
+          {label: 'OTTO Motors', value: 'OTTO'},
+          {label: 'Samsung', value: 'Samsung'},
         ],
       },
-      pizzaTopping: {
-        label: 'Favorite pizza topping',
+      badges: {
+        label: 'Badges',
         element: 'select',
         options: [
-          {label: 'Buffalo chicken', value: 'BUFFALO_CHICKEN'},
-          {label: 'Pepperoni', value: 'PEPPERONI'},
-          {label: 'Meat lovers', value: 'MEATLOVERS'},
-          {label: 'Eggplant parmesan', value: 'EGGPLANT_PARM'},
-          {label: 'Olives', value: 'OLIVES'},
-          {label: 'Hawaiian', value: 'HAWAIIAN'},
+          {label: 'Robot', value: 'Robot'},
+          {label: 'Storage', value: 'Storage'},
+          {label: 'Vehicle', value: 'Vehicle'},
+        ],
+      },
+      functions: {
+        label: 'Functions',
+        element: 'select',
+        options: [
+          {label: 'AMRs For Warehouse', value: 'AMR_WAREHOUSE'},
+          {label: 'Warehouse of the Future', value: 'WAREHOUSE_OF_FUTURE'},
+          {label: 'Warehouse Storage', value: 'STORAGE'},
         ],
       },
     },
@@ -92,89 +98,12 @@ const UserProfile = (): JSX.Element => {
       <section className="UserProfile">
           <PeriqlesForm
             environment={modernEnvironment}
-            mutationName={'AddUser'}
+            mutationName={'AddDevice'}
             mutationGQL={mutationGQL}
             specifications={specifications}
             args={args}
             callbacks={{onSuccess, onFailure}}
           />
-          <main className="UserProfile-main">
-            <h2>Most Recently Added User</h2>
-            <QueryRenderer
-              environment={modernEnvironment}
-              query={graphql`
-                query UserProfileQuery {
-                  demoUser {
-                    userId
-                    username
-                    password
-                    email
-                    gender
-                    pizzaTopping
-                    age
-                  }
-                }
-              `}
-            render={({error, props}: {error: Error; props: QueryResponse}) => {
-              if (props && !props.demoUser) {
-                return <p>Sign up...</p>;
-              }
-              if (props && props.demoUser) {
-                const {demoUser} = props;
-                return (
-                  <div>
-                    <p><label>Username:</label> {demoUser.username}</p>
-                    <p><label>Email:</label> {demoUser.email}</p>
-                    <p><label>Gender:</label> {demoUser.gender}</p>
-                    <p><label>Favorite Pizza Topping:</label> {demoUser.pizzaTopping}</p>
-                    <p><label>Age:</label> {demoUser.age}</p>
-                  </div>
-                );
-              } else if (error) {
-                console.error(error);
-                return <p>Something went wrong...</p>;
-              }
-
-              return <p>Loading...</p>;
-            }}
-          />
-        </main>
-      </section>
-      <section className="CodeDemo">
-        <h1>Relay Code Examples</h1>
-        <section className="Codeblocks">
-          <section className="SchemaCode">
-            <h3>Mutation Schema</h3>
-            <SyntaxHighlighter language="js" style={vscDarkPlus} showLineNumbers={true} codeTagProps={{style: {fontSize: "inherit"}}} customStyle={{fontSize: 18}}>
-                {"mutation UserProfile_AddUserMutation($input: AddUserInput!) {\n"+
-                "  addUser(input: $input) {\n"+
-                "    userId\n"+
-                "    username\n"+
-                "    password\n"+
-                "    email\n"+
-                "    gender\n"+
-                "    pizzaTopping\n"+
-                "    age\n"+
-                "  }\n"+
-                "}"}
-              </SyntaxHighlighter>
-          </section>
-          <section className="PeriqlesCode">
-            <h3>PeriqlesForm Tag</h3>
-            <SyntaxHighlighter language="jsx" style={vscDarkPlus} showLineNumbers={true} codeTagProps={{style: {fontSize: "inherit"}}} customStyle={{fontSize: 18}}>
-              {"<PeriqlesForm\n"+
-              "  environment={modernEnvironment}\n"+
-              "  mutationName={\'AddUser\'}\n"+
-              "  mutationGQL={mutationGQL}\n"+
-              "  specifications={specifications}\n"+
-              "  args={args}\n"+
-              "  callbacks={{onSuccess, onFailure}}\n"+
-            "/>\n"+
-            "\n"+
-            "\n"}
-            </SyntaxHighlighter>
-          </section>
-        </section>
       </section>
     </div>
   );

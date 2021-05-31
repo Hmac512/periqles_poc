@@ -6,9 +6,9 @@ const LogoSection = (): JSX.Element => {
     <div className="LogoSection">
       <img id="periqles-logo"
       className="marketing-logo" 
-      src="../../public/assets/periqles-logo.png" alt="periqles"/>
+      src="../../public/assets/dimo-logo.png" alt="periqles"/>
       <h2 className="pitch" id="short-pitch">
-        Painless forms for GraphQL.
+        POC For Periqles.
       </h2>
     </div>
   );

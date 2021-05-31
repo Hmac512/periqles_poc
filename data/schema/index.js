@@ -1,12 +1,12 @@
 const {GraphQLObjectType, GraphQLSchema} = require('graphql');
 const {nodeField} = require('./nodes.js');
-const {demoUserQuery} = require('./queries/demoUserQuery.js');
-const {AddUserMutation} = require('./mutations/AddUserMutation.js');
+const {DeviceQuery} = require('./queries/demoDeviceQuery.js');
+const {AddDeviceMutation} = require('./mutations/AddDeviceMutation.js');
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    demoUser: demoUserQuery,
+    device: DeviceQuery,
     node: nodeField,
   },
 });
@@ -14,7 +14,7 @@ const Query = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addUser: AddUserMutation,
+    addDevice: AddDeviceMutation,
   },
 });
 

@@ -4,20 +4,21 @@ const {
   GraphQLString,
   GraphQLEnumType,
   GraphQLInt,
+  GraphQLFloat,
 } = require('graphql');
 const {fromGlobalId, globalIdField, nodeDefinitions} = require('graphql-relay');
-const {DemoUser, getLastDemoUserOrThrow} = require('../database.js');
+const {Device, getLastDemoDeviceOrThrow} = require('../database.js');
 
 const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
     const {type, id} = fromGlobalId(globalId);
-    if (type === 'DemoUser') {
-      return getLastDemoUserOrThrow();
+    if (type === 'Device') {
+      return getLastDemoDeviceOrThrow();
     }
     return null;
   },
   (obj) => {
-    if (obj instanceof DemoUser) {
+    if (obj instanceof Device) {
       return obj;
     }
 
@@ -25,78 +26,86 @@ const {nodeInterface, nodeField} = nodeDefinitions(
   },
 );
 
-const GenderEnum = new GraphQLEnumType({
-  name: 'GenderEnum',
+const OrgEnum = new GraphQLEnumType({
+  name: 'OrgEnum',
   values: {
-    NON_BINARY: {
-      value: 'NON_BINARY',
+    GeekPlus: {
+      value: 'Geek+',
     },
-    FEMALE: {
-      value: 'FEMALE',
+    OTTO: {
+      value: 'OTTO Motors',
     },
-    MALE: {
-      value: 'MALE',
+    Samsung: {
+      value: 'Samsung',
     },
   },
 });
 
-const PizzaToppingEnum = new GraphQLEnumType({
-  name: 'PizzaToppingEnum',
+const BadgeEnum = new GraphQLEnumType({
+  name: 'BadgeEnum',
   values: {
-    BUFFALO_CHICKEN: {
-      value: 'BUFFALO_CHICKEN',
+    Robot: {
+      value: 'Robot',
     },
-    PEPPERONI: {
-      value: 'PEPPERONI',
+    Storage: {
+      value: 'Storage',
     },
-    MEATLOVERS: {
-      value: 'MEATLOVERS',
-    },
-    EGGPLANT_PARM: {
-      value: 'EGGPLANT_PARM',
-    },
-    OLIVES: {
-      value: 'OLIVES',
-    },
-    HAWAIIAN: {
-      value: 'HAWAIIAN',
+    Vehicle: {
+      value: 'Vehicle',
     },
   },
 });
 
-const demoGraphQLUser = new GraphQLObjectType({
-  name: 'DemoUser',
+const FunctionEnum = new GraphQLEnumType({
+  name: 'FunctionEnum',
+  values: {
+    AMR_WAREHOUSE: {
+      value: 'AMRs For Warehouse',
+    },
+    WAREHOUSE_OF_FUTURE: {
+      value: 'Warehouse of the Future',
+    },
+    STORAGE: {
+      value: 'Warehouse Storage',
+    },
+  },
+});
+
+
+
+const demoGraphQLDevice = new GraphQLObjectType({
+  name: 'Device',
   fields: {
-    id: globalIdField('DemoUser'),
-    userId: {
+    id: globalIdField('Device'),
+    deviceId: {
       type: new GraphQLNonNull(GraphQLString),
-      resolve: (demoUser) => demoUser.userId,
+      resolve: (device) => device.deviceId,
     },
-    username: {
+    deviceName: {
       type: new GraphQLNonNull(GraphQLString),
-      resolve: (demoUser) => demoUser.username,
+      resolve: (device) => device.deviceName,
     },
-    password: {
+    description: {
       type: new GraphQLNonNull(GraphQLString),
-      resolve: (demoUser) => demoUser.password,
+      resolve: (device) => device.description,
     },
-    email: {
-      type: new GraphQLNonNull(GraphQLString),
-      resolve: (demoUser) => demoUser.email,
+    cost: {
+      type: new GraphQLNonNull(GraphQLFloat),
+      resolve: (device) => device.cost,
     },
-    gender: {
-      type: new GraphQLNonNull(GenderEnum),
-      resolve: (demoUser) => demoUser.gender,
+    oem: {
+      type: new GraphQLNonNull(OrgEnum),
+      resolve: (device) => device.oem,
     },
-    pizzaTopping: {
-      type: new GraphQLNonNull(PizzaToppingEnum),
-      resolve: (demoUser) => demoUser.pizzaTopping,
+    badges: {
+      type: new GraphQLNonNull(BadgeEnum),
+      resolve: (device) => device.badges,
     },
-    age: {
-      type: new GraphQLNonNull(GraphQLInt),
-      resolve: (demoUser) => demoUser.age,
+    functions: {
+      type: new GraphQLNonNull(FunctionEnum),
+      resolve: (device) => device.functions,
     },
   },
 });
 
-module.exports = {nodeField, demoGraphQLUser, GenderEnum, PizzaToppingEnum};
+module.exports = {nodeField, demoGraphQLDevice, OrgEnum, BadgeEnum, FunctionEnum};

@@ -17,9 +17,7 @@ if (rootElement) {
         <h1><a href="#">periqles</a></h1>
       </header>
       <LogoSection />
-      <LinksSection />
       <Demo />
-      <Creators />
     </React.StrictMode>,
     rootElement,
   );

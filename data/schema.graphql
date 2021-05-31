@@ -1,5 +1,5 @@
 type Query {
-  demoUser: DemoUser
+  device: Device
 
   """Fetches an object given its ID"""
   node(
@@ -8,31 +8,34 @@ type Query {
   ): Node
 }
 
-type DemoUser {
+type Device {
   """The ID of an object"""
   id: ID!
-  userId: String!
-  username: String!
-  password: String!
-  email: String!
-  gender: GenderEnum!
-  pizzaTopping: PizzaToppingEnum!
-  age: Int!
+  deviceId: String!
+  deviceName: String!
+  description: String!
+  cost: Float!
+  oem: OrgEnum!
+  badges: BadgeEnum!
+  functions: FunctionEnum!
 }
 
-enum GenderEnum {
-  NON_BINARY
-  FEMALE
-  MALE
+enum OrgEnum {
+  GeekPlus
+  OTTO
+  Samsung
 }
 
-enum PizzaToppingEnum {
-  BUFFALO_CHICKEN
-  PEPPERONI
-  MEATLOVERS
-  EGGPLANT_PARM
-  OLIVES
-  HAWAIIAN
+enum BadgeEnum {
+  Robot
+  Storage
+  Vehicle
+}
+
+enum FunctionEnum {
+  AMR_WAREHOUSE
+  WAREHOUSE_OF_FUTURE
+  STORAGE
 }
 
 """An object with an ID"""
@@ -42,26 +45,26 @@ interface Node {
 }
 
 type Mutation {
-  addUser(input: AddUserInput!): AddUserPayload
+  addDevice(input: AddDeviceInput!): AddDevicePayload
 }
 
-type AddUserPayload {
-  userId: String!
-  username: String!
-  password: String!
-  email: String!
-  gender: GenderEnum!
-  pizzaTopping: PizzaToppingEnum!
-  age: Int!
+type AddDevicePayload {
+  deviceId: String!
+  deviceName: String!
+  description: String!
+  cost: String!
+  oem: OrgEnum!
+  badges: BadgeEnum!
+  functions: FunctionEnum!
   clientMutationId: String
 }
 
-input AddUserInput {
-  username: String!
-  password: String!
-  email: String!
-  gender: GenderEnum!
-  pizzaTopping: PizzaToppingEnum!
-  age: Int!
+input AddDeviceInput {
+  deviceName: String!
+  description: String!
+  cost: String!
+  oem: OrgEnum!
+  badges: BadgeEnum!
+  functions: FunctionEnum!
   clientMutationId: String
 }

@@ -1,87 +1,86 @@
 //DEMO USER CLASSES, FUNCTIONS AND INFO
 
 // DemoUser class:
-class DemoUser {
-  constructor(userId, username, password, email, gender, pizzaTopping, age) {
-    this.userId = userId;
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.gender = gender;
-    this.pizzaTopping = pizzaTopping;
-    this.age = age;
+class Device {
+  constructor(deviceId, deviceName, description, cost, oem, badges, functions) {
+    this.deviceId = deviceId;
+    this.deviceName = deviceName;
+    this.description = description;
+    this.cost = cost;
+    this.oem = oem;
+    this.badges = badges;
+    this.functions = functions;
   }
 }
 
 // Mock database seeded with initial user
-const demoUsersById = new Map([
-  [0, new DemoUser('0', 'bob', 'anna', 'bob@bob.io', 'MALE', 'HAWAIIAN', 10)],
+const demoDevicesById = new Map([
+  [0, new Device('0', 'OTTO 100', 'Dank AMR', 250.00, 'OTTO', 'Robot', 'AMR_WAREHOUSE')],
 ]);
 
 // Seed initial user
-let nextUserId = 1;
+let nextDeviceId = 1;
 
-function getDemoUser(userId) {
-  return demoUsersById.get(userId);
+function getDemoDevice(deviceId) {
+  return demoDevicesById.get(deviceId);
 }
-function getDemoUserOrThrow(userId) {
-  const demoUser = getDemoUser(userId);
-  if (!demoUser) {
-    throw new Error(`Invariant exception, DemoUser ${userId} not found`);
+function getDemoDeviceOrThrow(deviceId) {
+  const demoDevice = getDemoDevice(deviceId);
+  if (!demoDevice) {
+    throw new Error(`Invariant exception, DemoDevice ${deviceId} not found`);
   }
 
-  return demoUser;
+  return demoDevice;
 }
 
-function getLastDemoUserOrThrow() {
-  let lastDemoUser;
-  const demoUsersIterator = demoUsersById[Symbol.iterator]();
+function getLastDemoDeviceOrThrow() {
+  let lastDemoDevice;
+  const demoDeviceIterator = demoDevicesById[Symbol.iterator]();
 
-  for (const userItem of demoUsersIterator) {
-    lastDemoUser = userItem[1];
+  for (const deviceItem of demoDeviceIterator) {
+    lastDemoDevice = deviceItem[1];
   }
 
-  return lastDemoUser;
+  return lastDemoDevice;
 }
 
-function getAllUsers() {
-  let demoUserList = [];
-  const demoUsersIterator = demoUsersById[Symbol.iterator]();
+function getAllDevices() {
+  let demoDeviceList = [];
+  const demoDevicesIterator = demoDevicesById[Symbol.iterator]();
 
-  for (const userItem of demoUsersIterator) {
-    demoUserList.push(userItem[1]);
+  for (const deviceItem of demoDevicesIterator) {
+    demoDeviceList.push(deviceItem[1]);
   }
 
-  return demoUserList;
+  return demoDeviceList;
 }
 
 // addUser function
-function addUser({
-  userId,
-  username,
-  password,
-  email,
-  gender,
-  pizzaTopping,
-  age,
+function addDevice({
+  deviceName,
+  description,
+  cost,
+  oem,
+  badges,
+  functions,
 }) {
-  const newUser = new DemoUser(
-    `${nextUserId++}`,
-    username,
-    password,
-    email,
-    gender,
-    pizzaTopping,
-    age,
+  const newDevice = new Device(
+    `${nextDeviceId++}`,
+    deviceName,
+    description,
+    cost,
+    oem,
+    badges,
+    functions,
   );
-  demoUsersById.set(newUser.userId, newUser);
-  return newUser;
+  demoDevicesById.set(newDevice.deviceId, newDevice);
+  return newDevice;
 }
 
 module.exports = {
-  DemoUser,
-  getDemoUserOrThrow,
-  getLastDemoUserOrThrow,
-  getAllUsers,
-  addUser,
+  Device,
+  getDemoDeviceOrThrow,
+  getLastDemoDeviceOrThrow,
+  getAllDevices,
+  addDevice,
 };

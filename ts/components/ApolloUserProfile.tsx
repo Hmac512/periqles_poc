@@ -31,7 +31,7 @@ export const GET_USER = gql`
 `;
 
 export const ADD_USER = gql`
-mutation AddUser($input: AddUserInput!){
+mutation AddUser($input: AddDeviceInput!){
   addUser(input: $input){
       username
       email

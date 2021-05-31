@@ -8,29 +8,30 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type GenderEnum = "FEMALE" | "MALE" | "NON_BINARY" | "%future added value";
-export type PizzaToppingEnum = "BUFFALO_CHICKEN" | "EGGPLANT_PARM" | "HAWAIIAN" | "MEATLOVERS" | "OLIVES" | "PEPPERONI" | "%future added value";
-export type AddUserInput = {|
-  username: string,
-  password: string,
-  email: string,
-  gender: GenderEnum,
-  pizzaTopping: PizzaToppingEnum,
-  age: number,
+export type BadgeEnum = "Robot" | "Storage" | "Vehicle" | "%future added value";
+export type FunctionEnum = "AMR_WAREHOUSE" | "STORAGE" | "WAREHOUSE_OF_FUTURE" | "%future added value";
+export type OrgEnum = "GeekPlus" | "OTTO" | "Samsung" | "%future added value";
+export type AddDeviceInput = {|
+  deviceName: string,
+  description: string,
+  cost: string,
+  oem: OrgEnum,
+  badges: BadgeEnum,
+  functions: FunctionEnum,
   clientMutationId?: ?string,
 |};
 export type UserProfile_AddUserMutationVariables = {|
-  input: AddUserInput
+  input: AddDeviceInput
 |};
 export type UserProfile_AddUserMutationResponse = {|
-  +addUser: ?{|
-    +userId: string,
-    +username: string,
-    +password: string,
-    +email: string,
-    +gender: GenderEnum,
-    +pizzaTopping: PizzaToppingEnum,
-    +age: number,
+  +addDevice: ?{|
+    +deviceId: string,
+    +deviceName: string,
+    +description: string,
+    +cost: string,
+    +oem: OrgEnum,
+    +badges: BadgeEnum,
+    +functions: FunctionEnum,
   |}
 |};
 export type UserProfile_AddUserMutation = {|
@@ -42,16 +43,16 @@ export type UserProfile_AddUserMutation = {|
 
 /*
 mutation UserProfile_AddUserMutation(
-  $input: AddUserInput!
+  $input: AddDeviceInput!
 ) {
-  addUser(input: $input) {
-    userId
-    username
-    password
-    email
-    gender
-    pizzaTopping
-    age
+  addDevice(input: $input) {
+    deviceId
+    deviceName
+    description
+    cost
+    oem
+    badges
+    functions
   }
 }
 */
@@ -74,58 +75,58 @@ v1 = [
         "variableName": "input"
       }
     ],
-    "concreteType": "AddUserPayload",
+    "concreteType": "AddDevicePayload",
     "kind": "LinkedField",
-    "name": "addUser",
+    "name": "addDevice",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "userId",
+        "name": "deviceId",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "username",
+        "name": "deviceName",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "password",
+        "name": "description",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "email",
+        "name": "cost",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "gender",
+        "name": "oem",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "pizzaTopping",
+        "name": "badges",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "age",
+        "name": "functions",
         "storageKey": null
       }
     ],
@@ -150,16 +151,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "ae10689a7b5a621a1a09d833975f7f73",
+    "cacheID": "fbedba542fdb0e06f2f5355366bbfe13",
     "id": null,
     "metadata": {},
     "name": "UserProfile_AddUserMutation",
     "operationKind": "mutation",
-    "text": "mutation UserProfile_AddUserMutation(\n  $input: AddUserInput!\n) {\n  addUser(input: $input) {\n    userId\n    username\n    password\n    email\n    gender\n    pizzaTopping\n    age\n  }\n}\n"
+    "text": "mutation UserProfile_AddUserMutation(\n  $input: AddDeviceInput!\n) {\n  addDevice(input: $input) {\n    deviceId\n    deviceName\n    description\n    cost\n    oem\n    badges\n    functions\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4ad681667ade44b20d61b8c3be8a43f8';
+(node/*: any*/).hash = 'ea4f92a10b96d5aa7159687a7df36cce';
 
 module.exports = node;
